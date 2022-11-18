@@ -15,9 +15,9 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 class Teacher extends Authenticatable implements HasMedia
 {
     use HasFactory, Notifiable, HasApiTokens, HasRoles, InteractsWithMedia;
-    protected $fillable = [
-        'login',
+
+    protected $guarded = [];
+    protected $hidden = [
         'password',
-        'telefon'
     ];
 }

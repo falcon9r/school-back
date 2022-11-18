@@ -44,6 +44,10 @@ return [
             'driver' => 'session',
             'provider' => 'students',
         ],
+        'teacher-api' => [
+            'driver' => 'passport',
+            'provider' => 'teachers',
+        ],
         'api' => [
             'driver' => 'token',
             'provider' => 'teachers',

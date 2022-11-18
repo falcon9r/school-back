@@ -20,9 +20,6 @@ return new class extends Migration
             $table->string("first_name")->nullable();
             $table->string("last_name")->nullable();
             $table->string("patronymic")->nullable();
-            $table->string('email')->unique()->nullable();
-            $table->string('telefon')->unique();
-            $table->date('birthday')->nullable();
             $table->timestamps();
         });
     }
