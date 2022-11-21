@@ -13,15 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('students', function (Blueprint $table) {
+        Schema::create('schoolwork_students', function (Blueprint $table) {
             $table->id();
-            $table->string('login')->unique();
-            $table->string('telefon')->nullable();
-            $table->string('password');
-            $table->integer('grade_id');
-            $table->string("first_name")->nullable();
-            $table->string("last_name")->nullable();
-            $table->string("patronymic")->nullable();
+            $table->integer('schoolworks_id');
+            $table->integer('student_id');
+            $table->integer('schoolwork_student_status_id');
             $table->timestamps();
         });
     }
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('students');
+        Schema::dropIfExists('schoolwork_students');
     }
 };

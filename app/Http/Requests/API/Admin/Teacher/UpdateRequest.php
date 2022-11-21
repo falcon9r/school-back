@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\API\Teacher\Auth;
+namespace App\Http\Requests\API\Admin\Teacher;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,8 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'login' => 'exists:teachers,login|required',
-            'password' => 'required'
+            'lesson_ids' => 'array|required',
+            'lesson_ids.*' => 'integer|required|exists:lessons,id'
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Grade;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,7 +21,10 @@ class StudentFactory extends Factory
     {
         return [
             'login' => fake()->freeEmail,
-            'password' => bcrypt('password')
+            'password' => bcrypt('password'),
+            'first_name' => fake()->name,
+            'last_name' => fake()->lastName,
+            'grade_id' => Grade::inRandomOrder()->first()->id
         ];
     }
 }
