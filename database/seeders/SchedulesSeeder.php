@@ -17,6 +17,7 @@ class SchedulesSeeder extends Seeder
      */
     public function run()
     {
+        Schedule::truncate();
         $days = Days::all();
         foreach ($days as $value) {
             if($value->id == 7){
@@ -39,6 +40,27 @@ class SchedulesSeeder extends Seeder
                 ]);
                 Schedule::query()->create([
                     'grade_id' => 1,
+                    'day_id' => $value->id,
+                    'lesson_id' => Lesson::inRandomOrder()->first()->id,
+                ]);
+
+                Schedule::query()->create([
+                    'grade_id' => 2,
+                    'day_id' => $value->id,
+                    'lesson_id' => Lesson::inRandomOrder()->first()->id,
+                ]);
+                Schedule::query()->create([
+                    'grade_id' => 2,
+                    'day_id' => $value->id,
+                    'lesson_id' => Lesson::inRandomOrder()->first()->id,
+                ]);
+                Schedule::query()->create([
+                    'grade_id' => 2,
+                    'day_id' => $value->id,
+                    'lesson_id' => Lesson::inRandomOrder()->first()->id,
+                ]);
+                Schedule::query()->create([
+                    'grade_id' => 2,
                     'day_id' => $value->id,
                     'lesson_id' => Lesson::inRandomOrder()->first()->id,
                 ]);

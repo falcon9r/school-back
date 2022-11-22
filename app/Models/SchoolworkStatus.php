@@ -8,5 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class SchoolworkStatus extends Model
 {
     use HasFactory;
+    protected $guarded = [];
+    
     const DEFAULT = 1;
 }
