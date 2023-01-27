@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\API\Grade;
+namespace App\Http\Requests\API\Option;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,8 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'teacher_id' => 'required|exists:teachers,id',
-            'number' => 'integer|between:0,12|required',
-            'sign' => 'string|required',
-            'created' => 'date|nullable'
+            'year_id' => "required|exists:years,id",
+            'date' => "required|exists:days_in_schools,date|date"
         ];
     }
 }

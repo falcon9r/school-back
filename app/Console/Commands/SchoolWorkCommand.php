@@ -6,7 +6,6 @@ use App\Models\Days;
 use App\Models\DaysInSchool;
 use App\Models\Grade;
 use App\Models\Schedule;
-use App\Models\ScheduleLesson;
 use App\Models\Schoolwork;
 use App\Models\SchoolworkStatus;
 use App\Models\SchoolworkStudent;
@@ -40,24 +39,20 @@ class SchoolWorkCommand extends Command
     {
         $date = Carbon::now()->format('Y-m-d');
         $today = Carbon::now()->dayName;
-        echo $today;
         $today = Days::query()->where('name' , $today)->first();
         $daysInSchool = DaysInSchool::query()->where('date' , $date)->get();
         foreach ($daysInSchool as $dayInSchool) {
            $students = Student::query()->where('grade_id' , $dayInSchool->grade_id)->get();
-            $schedule = Schedule::query()
+            $schedules = Schedule::query()
                                     ->where('grade_id' , $dayInSchool->grade_id)
                                     ->where('day_id' , $today->id)->first();
-            $schedule_lessons = ScheduleLesson::query()
-                                    ->where('schedule_id' , $schedule->id)
-                                    ->get();
-            foreach ($schedule_lessons as $schedule_lesson) {
+            foreach ($schedules as $schedule) {
                 $schoolwork = Schoolwork::query()->create([
                     'days_in_school_id' => $dayInSchool->id,
-                    'lesson_id' => $schedule_lesson->lesson_id,
-                    'place' => $schedule_lesson->place,
+                    'lesson_id' => $schedule->lesson_id,
+                    'place' => $schedule->place,
                     'schoolwork_status_id' => SchoolworkStatus::DEFAULT
-                ]);
+                    ]);
                 foreach ($students as $student) {
                     SchoolworkStudent::query()->create([
                         'schoolworks_id' => $schoolwork->id,

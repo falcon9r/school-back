@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('schoolwork_students', function (Blueprint $table) {
+        Schema::create('options', function (Blueprint $table) {
             $table->id();
-            $table->integer('note')->nullable();
-            $table->integer('schoolworks_id');
-            $table->integer('student_id');
-            $table->integer('schoolwork_student_status_id');
+            $table->integer('teacher_id');
+            $table->integer('year_id');
+            $table->date('date');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('schoolwork_students');
+        Schema::dropIfExists('options');
     }
 };

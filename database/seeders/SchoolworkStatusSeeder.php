@@ -38,5 +38,9 @@ class SchoolworkStatusSeeder extends Seeder
         SchoolworkStudentStatus::query()->create([
             'name' => 'прогул'
         ]);
+        
+        SchoolworkStudentStatus::query()->create([
+            'name' => 'Ушел из-за гриппа'
+        ]);
     }
 }

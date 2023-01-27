@@ -6,8 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Grade\StoreRequest;
 use App\Http\Requests\API\Grade\UpdateRequest;
 use App\Models\Grade;
+use App\Models\Teacher;
 use Carbon\Carbon;
+use Exception;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response as HttpResponse;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response as FacadesResponse;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class GradeController extends Controller
 {
@@ -18,7 +26,11 @@ class GradeController extends Controller
      */
     public function index()
     {
-        $grades = Grade::with(['teacher'])->get(); 
+        $grades = DB::select("SELECT grades.id , grades.created , 
+            concat(grades.number , grades.sign) as grade ,  
+            teachers.id as teacher_id , teachers.login , 
+            (select count(id) from students where grades.id = students.grade_id) as  students from grades
+                        INNER JOIN teachers ON grades.teacher_id = teachers.id;");
         return response()->json($grades);
     }
 
@@ -36,10 +48,16 @@ class GradeController extends Controller
         }
         $grade = Grade::query()->create($data);
         return response()->json([
-            'message' => 'ok'
+            'title' => "Success",
+            'message' => 'Grade success created'
         ]);
     }
 
+    public function index_fast()
+    {
+        $grades = DB::select("SELECT id , concat(number , sign)  as grade FROM grades;");
+        return response()->json($grades);
+    }
     /**
      * Display the specified resource.
      *
@@ -48,8 +66,22 @@ class GradeController extends Controller
      */
     public function show($id)
     {
-        $grade = Grade::with(['teacher'])->where('id', $id)->first();
-        return response()->json($grade);
+        try{
+            $grade = DB::select("SELECT grades.id , grades.created , 
+            grades.number , grades.sign , concat(grades.number , grades.sign) as grade,  
+            teachers.id as teacher_id , teachers.login , 
+            (select count(id) from students where grades.id = students.grade_id) as  students from grades
+                        INNER JOIN teachers ON grades.teacher_id = teachers.id WHERE grades.id = {$id};");
+            if($grade == null) throw new Exception();
+            $grade = $grade[0];
+            return response()->json($grade);
+        }
+        catch(Exception $ex){
+            return response()->json([
+                'message' => "ID NOT FIND !"
+            ], HttpResponse::HTTP_NOT_FOUND);
+        }   
+        
     }
 
     /**
@@ -62,6 +94,16 @@ class GradeController extends Controller
     public function update(UpdateRequest $request, $id)
     {
         $data = $request->validated();
+        $check = Grade::query()
+            ->where('sign' , $data['sign'])
+            ->where('number' , $data['number'])
+            ->whereNot('id' , $id)
+            ->first();
+        if($check != null){
+            return response()->json([
+                'message' => 'Grade already exist'
+            ], 422);
+        }
         if(!isset($data['created'])){
             $data['created'] = Carbon::now();
         }
@@ -82,4 +124,9 @@ class GradeController extends Controller
     {
         //
     }
+    public function gradesTeachers(){
+        $teachers = Teacher::all(['id' , 'login' , 'first_name' , 'last_name']);
+        return response()->json($teachers);
+    }
+
 }

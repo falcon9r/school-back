@@ -10,4 +10,8 @@ class SpecialtiesTeacher extends Model
     use HasFactory;
     
     protected $guarded = [];
+
+    public function subject(){
+        return $this->belongsTo(Lesson::class , 'lesson_id' , 'id');
+    }
 }

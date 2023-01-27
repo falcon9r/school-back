@@ -8,7 +8,6 @@ use App\Models\Grade;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Console\Command;
 use Carbon\Carbon;
-use Illuminate\Console\Scheduling\Schedule;
 
 class DaysInSchoolCommand extends Command
 {
@@ -28,7 +27,7 @@ class DaysInSchoolCommand extends Command
 
     /**
      * Execute the console command.
-     *
+     * Only Sunday execute
      * @return int
      */
     public function handle()

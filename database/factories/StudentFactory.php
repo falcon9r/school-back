@@ -20,11 +20,21 @@ class StudentFactory extends Factory
     public function definition()
     {
         return [
-            'login' => fake()->freeEmail,
+            'login' => $this->generator(),
             'password' => bcrypt('password'),
             'first_name' => fake()->name,
             'last_name' => fake()->lastName,
             'grade_id' => Grade::inRandomOrder()->first()->id
         ];
+    }
+    private function generator(){
+        $login = "fake-";
+        $login .= (string)random_int(10 , 99);
+        $login .= substr(md5(microtime()),rand(0,26),7); // generate 3 chars:
+        $password = (string)substr(md5(microtime()),rand(0,26),5);
+        if(Student::query()->where('login' , $login)->exists()){
+            return $this->generator();
+        }
+        return $login;
     }
 }

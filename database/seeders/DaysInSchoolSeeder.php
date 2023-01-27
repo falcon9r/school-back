@@ -25,11 +25,9 @@ class DaysInSchoolSeeder extends Seeder
             ->where('year_id', $year->id)
             ->where('start', '<=', Carbon::now()->format("Y-m-d"))
             ->where('end', '>=' , Carbon::now()->format("Y-m-d"))->first();
-
         $grades = DB::table('grades')->whereBetween('number' , [1 , 11])->get();
 
         $day = Carbon::now();
-        $today = $day->dayName;
         if($day->dayName == "Sunday"){
             Artisan::call('days:create');
         }else{
@@ -42,7 +40,6 @@ class DaysInSchoolSeeder extends Seeder
                         'days_in_school_status_id' => DaysInSchoolStatus::DEFAULT,
                         'date' => $day->format("Y-m-d")
                     ]);
-                    
                     $day = $day->addDay();
                 } 
                 $day = Carbon::now();

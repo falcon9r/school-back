@@ -9,6 +9,7 @@ use App\Models\Grade;
 use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,8 +20,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        
         $this->call([
-           RolesSeeder::class,
+            RolesSeeder::class,
             TeacherSeeder::class,
             GradeSeeder::class,
             StudentSeeder::class,
@@ -33,7 +35,6 @@ class DatabaseSeeder extends Seeder
             DaysInSchoolSeeder::class,
             SchoolworkStatusSeeder::class,
             SchoolworkSeeder::class
-            
         ]);   
     }
 }

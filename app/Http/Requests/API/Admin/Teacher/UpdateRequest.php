@@ -24,8 +24,9 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'lesson_ids' => 'array|required',
-            'lesson_ids.*' => 'integer|required|exists:lessons,id'
+            'subjects' => 'array|required',
+            'subjects.*.id' => 'integer|required|exists:lessons,id',
+            'subjects.*.teach' => 'required|boolean',
         ];
     }
 }

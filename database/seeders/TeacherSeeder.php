@@ -22,6 +22,6 @@ class TeacherSeeder extends Seeder
             'password' => bcrypt('password')
         ]);
         $super_admin->assignRole(Role::findById(1)->id);
-        Teacher::factory()->count(20)->create();
+        Teacher::factory()->count(40)->create();
     }
 }

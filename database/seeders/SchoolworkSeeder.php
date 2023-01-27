@@ -27,15 +27,17 @@ class SchoolworkSeeder extends Seeder
     {
         Schoolwork::truncate();
         SchoolworkStudent::truncate();
-        $dayInSchools = DaysInSchool::query()->where('date' , '=' , Carbon::now()->format('Y-m-d'))->get();
+        $dayInSchools = DaysInSchool::query()->get();
         foreach ($dayInSchools as $dayInSchool) {
             $grade = Grade::find($dayInSchool->grade_id);
-            $today = Days::TUESDAY;
+            # change with hand !
+            $today = Days::MONDAY;
             $schedules = DB::table('schedules')->where('grade_id' , $grade->id)->where('day_id', $today)->get();
             foreach ($schedules as $schedule) {
                 $Schoolwork = Schoolwork::query()->create([
                     'days_in_school_id' => $dayInSchool->id,
                     'lesson_id' => $schedule->lesson_id,
+                    'place' => $schedule->lesson_id,
                     'schoolwork_status_id' => SchoolworkStatus::DEFAULT
                 ]);
 

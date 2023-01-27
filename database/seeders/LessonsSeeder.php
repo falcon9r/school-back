@@ -25,6 +25,12 @@ class LessonsSeeder extends Seeder
             [
                 'name' => 'физика'
             ],
+            [
+                'name' => 'руси'
+            ],
+            [
+                'name' => 'англиси'
+            ],
         ];
 
         Lesson::truncate();

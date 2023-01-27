@@ -13,4 +13,7 @@ class Student extends Authenticatable
     use HasFactory, Notifiable, HasApiTokens, HasRoles;
     
     protected $guarded = [];
+    protected $hidden = [
+        'password'
+    ];
 }

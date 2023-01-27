@@ -17,7 +17,8 @@ class SpecialtiesTeachers extends Seeder
      */
     public function run()
     {
-        for ($i=0; $i < 7; $i++) { 
+        $teachers = Teacher::query()->get();
+        foreach ($teachers as $teacher) {
             $data = [
                 'teacher_id' => Teacher::inRandomOrder()->first()->id,
                 'lesson_id' => Lesson::inRandomOrder()->first()->id

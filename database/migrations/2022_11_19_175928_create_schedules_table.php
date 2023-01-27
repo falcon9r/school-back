@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('grade_id');
             $table->integer('day_id');
             $table->integer('lesson_id');
-            $table->integer('place')->nullable();
+            $table->integer('place');
             $table->timestamps();
         });
     }

@@ -19,6 +19,7 @@ class DaysInSchoolStatusSeeder extends Seeder
             'Уроки прошли',
             'Уроки отменены',
             'Отдых',
+            'Нет статуса',
             'Праздник'
         ];
 

@@ -11,6 +11,22 @@ use Illuminate\Support\Facades\DB;
 
 class TeacherController extends Controller
 {
+    private function generator(){
+        $login = "origin-";
+        $login .= (string)random_int(10 , 99);
+        $login .= substr(md5(microtime()),rand(0,26),3); // generate 3 chars:
+        $password = (string)substr(md5(microtime()),rand(0,26),5);
+        if(Teacher::query()->where('login' , $login)->exists()){
+            return $this->generator();
+        }
+        return [
+            'login' => $login,
+            'password' => $password
+        ];
+    }
+    public function fake_generated(){
+        return response()->json($this->generator());
+    }
     /**
      * Display a listing of the resource.
      *

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Grade;
+use App\Models\Teacher;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,19 +18,33 @@ class GradeSeeder extends Seeder
     public function run()
     {
         Grade::truncate();
-        $data = [
-            'teacher_id' => 1,
-            'number' => 11,
-            'sign' => 'A',
-            'created' => Carbon::now()->format('Y-m-d'),
-        ];
-        Grade::query()->create($data);
-        $data = [
-            'teacher_id' => 2,
-            'number' => 9,
-            'sign' => 'B',
-            'created' => Carbon::now()->format('Y-m-d'),
-        ];
+        
+        for ($i=0; $i < 12; $i++) { 
+            $data = [
+                'teacher_id' => Teacher::inRandomOrder()->first()->id,
+                'number' => $i + 1,
+                'sign' => 'A',
+                'created' => Carbon::now()->format('Y-m-d'),
+            ];
             Grade::query()->create($data);
+        }
+        for ($i=0; $i < 12; $i++) { 
+            $data = [
+                'teacher_id' => Teacher::inRandomOrder()->first()->id,
+                'number' => $i + 1,
+                'sign' => 'B',
+                'created' => Carbon::now()->format('Y-m-d'),
+            ];
+            Grade::query()->create($data);
+        }
+        for ($i=0; $i < 12; $i++) { 
+            $data = [
+                'teacher_id' => Teacher::inRandomOrder()->first()->id,
+                'number' => $i + 1,
+                'sign' => 'C',
+                'created' => Carbon::now()->format('Y-m-d'),
+            ];
+            Grade::query()->create($data);
+        }
     }
 }
